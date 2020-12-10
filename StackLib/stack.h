@@ -97,7 +97,7 @@ TStack<T>::~TStack()
 {
   size = 0;
   if (flag) // удаляются только внутренние данные
-    if (data != 0)
+    if (data != nullptr)
     {
       delete[] data;
       data = 0;
