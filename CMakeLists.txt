@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8) #Проверка версии CMake.
 
-set (CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_STANDARD 11)
 set(PROJECT_NAME mp2-lab5-multistack) #Создаем обычную локальную переменную с именем проекта
 project(${PROJECT_NAME}) # Название проекта
   
+set(StackLib StackLib) 
 set(MultiStack MultiStack)
 set(main main)
 
