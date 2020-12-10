@@ -54,7 +54,7 @@ istream& operator >> (istream& istr, TMultiStack<T1> &A) {
   int stCount;
   istr >> stCount;
   int _size = 0;
-  istr >> size;
+  istr >> _size;
   A.Resize(_size, stCount);
   for (int i = 0; i < stCount; i++) 
   {
@@ -227,17 +227,7 @@ T TMultiStack<T>::Get(int index)
   return d;
 }
 
-template<class T>
-void TMultiStack<T>::SetData(T* _data, int _size, int _top)
-{
-  if (flag)
-    delete[] data;
 
-  size = _size;
-  flag = false;
-  data = _data;
-  top = _top;
-}
 
 template<class T>
 int TMultiStack<T>::IsEmpty(int index) const
@@ -245,7 +235,7 @@ int TMultiStack<T>::IsEmpty(int index) const
   if (index >= 0 && index < stackCount)
     throw - 1;
 
-  return stackSet[i].IsEmpty();
+  return stackSet[index].IsEmpty();
 }
 
 template<class T>
@@ -254,7 +244,7 @@ int TMultiStack<T>::IsFull(int index) const
   if (index >= 0 && index < stackCount)
     throw - 1;
 
-  return stackSet[i].IsFull();
+  return stackSet[index].IsFull();
 }
 
 template <class T>

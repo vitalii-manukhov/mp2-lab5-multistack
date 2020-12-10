@@ -56,7 +56,7 @@ istream& operator >> (istream& istr, TStack<T1> &A) {
 }
 
 template<class T>
-TStack<T>::TStack(int _size, bool _flag = true)
+TStack<T>::TStack(int _size, bool _flag)
 {
   if (_size > 0)
   {
@@ -153,12 +153,15 @@ template<class T>
 void TStack<T>::SetData(T* _data, int _size, int _top)
 {
   if (flag)
-    delete[] data;
+  {
+	  if (data != nullptr)
+		delete[] data;
 
-  size = _size;
-  flag = false;
-  data = _data;
-  top = _top;
+	size = _size;
+	flag = false;
+	data = _data;
+	top = _top;
+  }
 }
 
 template<class T>
