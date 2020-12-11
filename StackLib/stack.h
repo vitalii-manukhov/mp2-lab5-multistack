@@ -22,6 +22,7 @@ public:
   void Put(T d); // запись элемента в стек
   T Get(); // извлечь последний записанный элемент стека
   void SetData(T* _data, int _size, int _top); // задает данные снаружи
+  void Resize(int _size = 1);
 
   template <class T1>
   friend ostream& operator<< (ostream& ostr, const TStack<T1> &A);
@@ -96,14 +97,16 @@ template <class T>
 TStack<T>::~TStack()
 {
   size = 0;
-  if (flag) // удаляются только внутренние данные
+  if (flag)
+  {	  // удаляются только внутренние данные
     if (data != nullptr)
     {
       delete[] data;
       data = 0;
     }
     else
-      throw - 1;
+      throw "error";
+  }
 }
 
 template <class T>
@@ -154,14 +157,39 @@ void TStack<T>::SetData(T* _data, int _size, int _top)
 {
   if (flag)
   {
-	  if (data != nullptr)
-		delete[] data;
-
-	size = _size;
-	flag = false;
-	data = _data;
-	top = _top;
+    if (data != nullptr)
+      delete[] data;
   }
+
+	 size = _size;
+	 flag = false;
+	 data = _data;
+	 top = _top;
+}
+
+template<class T>
+void TStack<T>::Resize(int _size)
+{
+    if (data == nullptr) 
+    {
+      if (_size > size)
+        size = _size + 1;
+      data = new T[size];
+      if (data == nullptr)
+        throw - 1;
+    }
+    else if ((top + _size) > size) 
+    {
+      T* temp = new T[_size];
+      if (temp == nullptr)
+        throw - 1;
+      for (int i = 0; i < this->GetCount(); ++i)
+        temp[i] = this->Get();
+
+      delete[] data;
+      data = temp;
+      size = _size;
+    }
 }
 
 template<class T>
@@ -187,3 +215,17 @@ int TStack<T>::GetCount()
 {
   return top;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

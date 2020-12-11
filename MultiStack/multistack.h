@@ -28,7 +28,6 @@ public:
 
   void Put(T d, int index); // запись элемента в стек
   T Get(int index); // извлечь последний записанный элемент стека
-  void SetData(T* _data, int _size, int _top); // задает данные снаружи
 
   template <class T1>
   friend ostream& operator<< (ostream& ostr, const TMultiStack<T1> &A);
@@ -185,7 +184,7 @@ TMultiStack<T>::~TMultiStack()
       data = 0;
     }
     else
-      throw - 1;
+      throw "error";
 }
 
 template <class T>
@@ -227,8 +226,6 @@ T TMultiStack<T>::Get(int index)
   return d;
 }
 
-
-
 template<class T>
 int TMultiStack<T>::IsEmpty(int index) const
 {
@@ -256,7 +253,7 @@ int TMultiStack<T>::GetSize()
 template<class T>
 void TMultiStack<T>::Resize(int _size, int _stackCount)
 {
-  return 0;
+  stackSet[_stackCount].Resize(_size);
 }
 
 #endif // ! _MULTISTACK_
