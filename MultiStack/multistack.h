@@ -34,8 +34,8 @@ public:
   template <class T1>
   friend istream& operator >> (istream& istr, TMultiStack<T1> &A);
 
-  int IsEmpty(int index) const; // контроль пустоты стека
-  int IsFull(int index) const; // контроль полноты стека
+  bool IsEmpty(int index) const; // контроль пустоты стека
+  bool IsFull(int index) const; // контроль полноты стека
   int GetSize(); // вернуть размер стека
   void Resize(int _size = 1, int _stackCount = 1); // изменить размер
 };
@@ -181,7 +181,7 @@ TMultiStack<T>::~TMultiStack()
     {
       delete[] data;
       delete[] stackSet;
-      data = 0;
+      data = nullptr;
     }
     else
       throw "error";
@@ -193,22 +193,27 @@ TMultiStack<T>& TMultiStack<T>::operator =(const TMultiStack<T>& _v)
   if (this == &_v)
     return *this;
 
-  size = _v.size;
-  delete[] data;
-  delete[] stackSet;
+  this->size = _v.size;
+
+  if (this->data != nullptr)
+    delete[] data;
+  if (stackSet != nullptr)
+    delete[] stackSet;
+
   data = new T[size];
   for (int i = 0; i < size; i++)
     data[i] = _v.data[i];
   stackSet = new TStack<T>[stackCount];
   for (int i = 0; i < stackCount; i++)
     stackSet[i] = _v.stackSet[i];
+
   return *this;
 }
 
 template<class T>
 void TMultiStack<T>::Put(T d, int index)
 {
-  if ((index < 0)&&(index >= stackCount))
+  if ((index < 0) || (index >= stackCount))
     throw "stack overflow";
   if (stackSet[index].IsFull())
     StackRelocation(index);
@@ -218,27 +223,27 @@ void TMultiStack<T>::Put(T d, int index)
 template<class T>
 T TMultiStack<T>::Get(int index)
 {
-  if ((index >= 0) && (index < stackCount))
+  if ((index < 0) || (index > stackCount))
     throw "stack overflow";
   if (stackSet[index].IsEmpty())
     throw - 2;
-  T d = stackSet[index].Put(d);
+  T d = stackSet[index].Get();
   return d;
 }
 
 template<class T>
-int TMultiStack<T>::IsEmpty(int index) const
+bool TMultiStack<T>::IsEmpty(int index) const
 {
-  if (index >= 0 && index < stackCount)
+  if (index < 0 || index > stackCount)
     throw - 1;
 
   return stackSet[index].IsEmpty();
 }
 
 template<class T>
-int TMultiStack<T>::IsFull(int index) const
+bool TMultiStack<T>::IsFull(int index) const
 {
-  if (index >= 0 && index < stackCount)
+  if (index < 0 || index > stackCount)
     throw - 1;
 
   return stackSet[index].IsFull();

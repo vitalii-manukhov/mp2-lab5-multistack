@@ -29,8 +29,8 @@ public:
   template <class T1>
   friend istream& operator >> (istream& istr, TStack<T1> &A);
 
-  int IsEmpty() const; // контроль пустоты стека
-  int IsFull() const; // контроль полноты стека
+  bool IsEmpty() const; // контроль пустоты стека
+  bool IsFull() const; // контроль полноты стека
   int GetSize(); // вернуть размер стека
   int GetCount(); // количество элементов
 };
@@ -51,7 +51,7 @@ istream& operator >> (istream& istr, TStack<T1> &A) {
   {
     T1 d;
     istr >> d;
-    A.Push(d);
+    A.Put(d);
   }
   return istr;
 }
@@ -193,13 +193,13 @@ void TStack<T>::Resize(int _size)
 }
 
 template<class T>
-int TStack<T>::IsEmpty() const
+bool TStack<T>::IsEmpty() const
 {
   return (top == 0);
 }
 
 template<class T>
-int TStack<T>::IsFull() const
+bool TStack<T>::IsFull() const
 {
   return (size == top);
 }
