@@ -1,0 +1,13 @@
+language: cpp
+compiler:
+  - gcc
+  - clang
+before_script:
+  - mkdir ../build
+  - cd ../build
+script:
+  - cmake ../mp2-lab5-multistack
+  - make -j
+  - ./test/MP2_TESTS
+notifications:
+  email: false
